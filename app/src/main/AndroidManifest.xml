@@ -26,7 +26,7 @@
         <activity android:name=".level.LevelThreeActivity"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".level."
+        <activity android:name=".level.LevelFourActivity"
             android:screenOrientation="landscape">
         </activity>
     </application>

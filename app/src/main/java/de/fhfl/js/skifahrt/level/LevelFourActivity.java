@@ -14,7 +14,7 @@ public class LevelFourActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_four);
+        setContentView(R.layout.activity_level);
     }
 
 

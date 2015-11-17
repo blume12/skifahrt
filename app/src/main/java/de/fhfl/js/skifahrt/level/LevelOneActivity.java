@@ -13,7 +13,6 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import de.fhfl.js.skifahrt.R;
 
@@ -33,7 +32,7 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_one);
+        setContentView(R.layout.activity_level);
 
 
         //Ansprechen des Sensor-Services
