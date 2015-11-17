@@ -20,6 +20,15 @@
         <activity android:name=".level.LevelOneActivity"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".level.LevelTwoActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".level.LevelThreeActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".level."
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
