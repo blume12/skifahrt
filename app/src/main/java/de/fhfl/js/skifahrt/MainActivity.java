@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openLevelOne(View view) {
         Intent intent = new Intent(this, LevelOneActivity.class);
+        this.startActivity(intent);
     }
 
     public void openLevelTwo(View view) {
