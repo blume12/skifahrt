@@ -37,7 +37,8 @@
         android:text="Level 1"
         android:id="@+id/button1"
         android:layout_above="@+id/button2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="openLevelOne"/>
 
     <TextView
         android:layout_width="wrap_content"
