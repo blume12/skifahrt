@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
     private WindowManager mWindowManager;
     private Display mDisplay;
 
-    private TextView textview;
+    private ImageView skifahrer;
     private RelativeLayout relativeLayout;
 
     @Override
@@ -47,7 +48,7 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mDisplay = mWindowManager.getDefaultDisplay();
 
-        textview = (TextView) findViewById(R.id.textView1);
+        skifahrer = (ImageView) findViewById(R.id.skifahrer);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
     }
 
@@ -63,11 +64,11 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
                 SkierMoving skier = new SkierMoving(event);
                 skier.setMaxHeight(relativeLayout.getHeight());
                 skier.setMaxWidth(relativeLayout.getWidth());
-                skier.setSkierHeight(textview.getLineHeight());
-                skier.setSkierPositionX(textview.getX());
-                skier.setSkierPositionY(textview.getY());
-                textview.setX(skier.getX());
-                textview.setY(skier.getY());
+                skier.setSkierHeight(skifahrer.getHeight());
+                skier.setSkierPositionX(skifahrer.getX());
+                skier.setSkierPositionY(skifahrer.getY());
+                skifahrer.setX(skier.getX());
+                skifahrer.setY(skier.getY());
                 break;
             case Surface.ROTATION_270:
                 // Landscape mode
