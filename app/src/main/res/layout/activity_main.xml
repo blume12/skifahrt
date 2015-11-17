@@ -6,47 +6,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Level 4"
-        android:id="@+id/button4"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level 3"
-        android:id="@+id/button3"
-        android:layout_above="@+id/button4"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level 2"
-        android:id="@+id/button2"
-        android:layout_above="@+id/button3"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level 1"
-        android:id="@+id/button1"
-        android:layout_above="@+id/button2"
+        android:text="@string/level_name_one"
+        android:id="@+id/buttonLevel1"
+        android:layout_above="@+id/buttonLevel2"
         android:layout_centerHorizontal="true"
         android:onClick="openLevelOne"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level_name_two"
+        android:id="@+id/buttonLevel2"
+        android:layout_above="@+id/buttonLevel3"
+        android:layout_centerHorizontal="true"
+        android:onClick="openLevelTwo"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level_name_three"
+        android:id="@+id/buttonLevel3"
+        android:layout_above="@+id/buttonLevel4"
+        android:layout_centerHorizontal="true"
+        android:onClick="openLevelThree"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level_name_four"
+        android:id="@+id/buttonLevel4"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="openLevelFour"/>
+
+
+
+
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Skifahrt"
+        android:text="@string/app_name"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

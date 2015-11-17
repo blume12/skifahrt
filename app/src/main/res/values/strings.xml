@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Skifahrt</string>
+    <string name="level_name_one">Level 1</string>
+    <string name="level_name_two">Level 2</string>
+    <string name="level_name_three">Level 3</string>
+    <string name="level_name_four">Level 4</string>
 </resources>

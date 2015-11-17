@@ -25,14 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void openLevelTwo(View view) {
         Intent intent = new Intent(this, LevelTwoActivity.class);
+          this.startActivity(intent);
 
     }
 
     public void openLevelThree(View view) {
         Intent intent = new Intent(this, LevelThreeActivity.class);
+        this.startActivity(intent);
     }
 
     public void openLevelFour(View view) {
         Intent intent = new Intent(this, LevelFourActivity.class);
+        this.startActivity(intent);
     }
 }
