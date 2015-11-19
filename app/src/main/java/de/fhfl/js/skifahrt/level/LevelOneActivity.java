@@ -1,16 +1,16 @@
 package de.fhfl.js.skifahrt.level;
 
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
-import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,7 +20,7 @@ import de.fhfl.js.skifahrt.R;
 /**
  * Created by Jasmin on 17.11.2015.
  */
-public class LevelOneActivity extends AppCompatActivity implements SensorEventListener {
+public class LevelOneActivity extends LevelActivity implements SensorEventListener {
 
     private String TAG = "LevelOneActivity";
 
@@ -84,15 +84,32 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
             return;
         }
 
-        // Landscape mode
-        skier.setEventValuesToDimensions(event, mDisplay);
-        skier.setSkierPositionX(skifahrer.getX());
-        skier.setSkierPositionY(skifahrer.getY());
-        skifahrer.setX(skier.getX());
-        skifahrer.setY(skier.getY());
+        //if(rabbitView.checkIfSkierCollide(rabbit.getWidth(), rabbit.getHeight(), skifahrer.getWidth(), skifahrer.getHeight())) {
+        if (skifahrer.getX() > 500) {
+            Log.i(TAG, "Level verloren");
 
-        if(rabbitView.checkIfSkierCollide(rabbit.getWidth(), rabbit.getHeight(), skifahrer.getWidth(), skifahrer.getHeight())) {
-            Log.d(TAG, "Level verloren");
+
+            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
+
+            findViewById(R.id.level_lost).getLayoutParams().width = relativeLayout.getWidth();
+            findViewById(R.id.level_lost).getLayoutParams().height = relativeLayout.getHeight();
+
+            Fragment frag = new LevelLostFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.level_lost, frag);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
+
+
+        } else {
+            // Landscape mode
+            skier.setEventValuesToDimensions(event, mDisplay);
+            skier.setSkierPositionX(skifahrer.getX());
+            skier.setSkierPositionY(skifahrer.getY());
+            skifahrer.setX(skier.getX());
+            skifahrer.setY(skier.getY());
+
         }
     }
 
@@ -118,5 +135,4 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
         sensorManager.unregisterListener(this);
         super.onStop();
     }
-
 }

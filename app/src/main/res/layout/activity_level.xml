@@ -59,4 +59,9 @@
         android:layout_alignLeft="@+id/skifahrer"
         android:layout_alignStart="@+id/skifahrer" />
 
+    <fragment android:name="de.fhfl.js.skifahrt.level.LevelLostFragment"
+        android:id="@+id/level_lost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

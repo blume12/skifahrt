@@ -4,4 +4,7 @@
     <string name="level_name_two">Level 2</string>
     <string name="level_name_three">Level 3</string>
     <string name="level_name_four">Level 4</string>
+
+    <string name="level_lost_headline">Level verloren!</string>
+    <string name="level_lost_refresh">Erneut versuchen</string>
 </resources>
