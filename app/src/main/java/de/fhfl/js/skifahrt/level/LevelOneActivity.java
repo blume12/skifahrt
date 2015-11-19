@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
@@ -21,13 +22,19 @@ import de.fhfl.js.skifahrt.R;
  */
 public class LevelOneActivity extends AppCompatActivity implements SensorEventListener {
 
+    private String TAG = "LevelOneActivity";
+
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private WindowManager mWindowManager;
     private Display mDisplay;
 
     private ImageView skifahrer;
+    private ImageView rabbit;
+    private Rabbit rabbitView;
+    private SkierMoving skier;
     private RelativeLayout relativeLayout;
+    private boolean firstCall = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,27 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
         mDisplay = mWindowManager.getDefaultDisplay();
 
         skifahrer = (ImageView) findViewById(R.id.skifahrer);
+        rabbit = (ImageView) findViewById(R.id.imageView3);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
+        rabbitView = new Rabbit();
+        skier = new SkierMoving();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (hasFocus && firstCall) {
+            skier.setMaxHeight(relativeLayout.getHeight());
+            skier.setMaxWidth(relativeLayout.getWidth());
+            skier.setSkierHeight(skifahrer.getHeight());
+
+            Log.d(TAG, "TEST: " + relativeLayout.getHeight());
+            rabbitView.setMaxHeight(relativeLayout.getHeight());
+            rabbitView.setMaxWidth(relativeLayout.getWidth());
+            rabbitView.loadPosition();
+            rabbit.setX(rabbitView.getPositionX());
+            rabbit.setY(rabbitView.getPositionY());
+            firstCall = false;
+        }
     }
 
     @Override
@@ -57,23 +84,16 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
             return;
         }
 
-        switch (mDisplay.getRotation()) {
-            case Surface.ROTATION_90:
-                // Landscape mode
-                SkierMoving skier = new SkierMoving(event);
-                skier.setMaxHeight(relativeLayout.getHeight());
-                skier.setMaxWidth(relativeLayout.getWidth());
-                skier.setSkierHeight(skifahrer.getHeight());
-                skier.setSkierPositionX(skifahrer.getX());
-                skier.setSkierPositionY(skifahrer.getY());
-                skifahrer.setX(skier.getX());
-                skifahrer.setY(skier.getY());
-                break;
-            case Surface.ROTATION_270:
-                // Landscape mode
-                break;
-        }
+        // Landscape mode
+        skier.setEventValuesToDimensions(event, mDisplay);
+        skier.setSkierPositionX(skifahrer.getX());
+        skier.setSkierPositionY(skifahrer.getY());
+        skifahrer.setX(skier.getX());
+        skifahrer.setY(skier.getY());
 
+        if(rabbitView.checkIfSkierCollide(rabbit.getWidth(), rabbit.getHeight(), skifahrer.getWidth(), skifahrer.getHeight())) {
+            Log.d(TAG, "Level verloren");
+        }
     }
 
     @Override
