@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLevelTwo(View view) {
-        Intent intent = new Intent(this, VoiceRecognitionActivity.class);
+        Intent intent = new Intent(this, LevelTwoActivity.class);
           this.startActivity(intent);
 
     }
