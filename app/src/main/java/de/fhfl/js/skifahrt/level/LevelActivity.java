@@ -21,4 +21,18 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelLo
 
     }
 
+
+    protected boolean isViewOverlapping(View firstView, View secondView) {
+        int[] firstPosition = new int[2];
+        int[] secondPosition = new int[2];
+
+        firstView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        firstView.getLocationOnScreen(firstPosition);
+        secondView.getLocationOnScreen(secondPosition);
+
+        int r = firstView.getMeasuredWidth() + firstPosition[0];
+        int l = secondPosition[0];
+        return r >= l && (r != 0 && l != 0);
+    }
+
 }

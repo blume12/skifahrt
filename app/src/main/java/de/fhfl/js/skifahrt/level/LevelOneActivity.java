@@ -68,7 +68,6 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
             skier.setMaxWidth(relativeLayout.getWidth());
             skier.setSkierHeight(skifahrer.getHeight());
 
-            Log.d(TAG, "TEST: " + relativeLayout.getHeight());
             rabbitView.setMaxHeight(relativeLayout.getHeight());
             rabbitView.setMaxWidth(relativeLayout.getWidth());
             rabbitView.loadPosition();
@@ -86,6 +85,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
 
         //if(rabbitView.checkIfSkierCollide(rabbit.getWidth(), rabbit.getHeight(), skifahrer.getWidth(), skifahrer.getHeight())) {
         if (skifahrer.getX() > 500) {
+         // if(isViewOverlapping(skifahrer, rabbit)) {
             Log.i(TAG, "Level verloren");
 
 
