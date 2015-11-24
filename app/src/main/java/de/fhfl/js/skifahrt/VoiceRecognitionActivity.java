@@ -1,7 +1,7 @@
 package de.fhfl.js.skifahrt;
 
 /**
- * Created by Admin on 19.11.2015.
+ * Created by Admin on 24.11.2015.
  */
 import java.util.ArrayList;
 
@@ -11,6 +11,8 @@ import android.speech.SpeechRecognizer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -19,7 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class VoiceRecognitionActivity extends Activity implements
+public class VoiceRecognitionActivity extends AppCompatActivity implements
         RecognitionListener {
 
     private TextView returnedText;
@@ -29,13 +31,16 @@ public class VoiceRecognitionActivity extends Activity implements
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
 
+  /**  private void setPartialResult(String[] results) {
+        returnedText.setText(TextUtils.join(" · ", results));
+    } */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_level);
         returnedText = (TextView) findViewById(R.id.txtSpeechInput);
-       // progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        toggleButton = (ToggleButton) findViewById(R.id.toggleButton1);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
 
         progressBar.setVisibility(View.INVISIBLE);
         speech = SpeechRecognizer.createSpeechRecognizer(this);
@@ -118,6 +123,16 @@ public class VoiceRecognitionActivity extends Activity implements
     @Override
     public void onPartialResults(Bundle arg0) {
         Log.i(LOG_TAG, "onPartialResults");
+        ArrayList<String> matches = arg0.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        String text = "";
+        for (String result : matches) text += result + "\n";
+        /**   Log.i("onPartialResults: keySet: " + partialResults.keySet());
+        String[] results = partialResults.getStringArray("com.google.android.voicesearch.UNSUPPORTED_PARTIAL_RESULTS");
+        //double[] resultsConfidence = partialResults.getDoubleArray("com.google.android.voicesearch.UNSUPPORTED_PARTIAL_RESULTS_CONFIDENCE");
+        if (results != null) {
+            setPartialResult(results);
+        }*/
+        returnedText.setText(text);
     }
 
     @Override
@@ -128,8 +143,7 @@ public class VoiceRecognitionActivity extends Activity implements
     @Override
     public void onResults(Bundle results) {
         Log.i(LOG_TAG, "onResults");
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
         for (String result : matches)
             text += result + "\n";
@@ -141,6 +155,8 @@ public class VoiceRecognitionActivity extends Activity implements
     public void onRmsChanged(float rmsdB) {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
         progressBar.setProgress((int) rmsdB);
+
+
     }
 
     public static String getErrorText(int errorCode) {

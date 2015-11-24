@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.fhfl.js.skifahrt" >
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,14 +20,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
-                //Femke Test ab hier
+
                 <action android:name="android.intent.ACTION_RECOGNIZE_SPEECH" />
                 <action android:name="android.intent.LANGUAGE_MODEL_FREE_FORM"/>
                 <action android:name="android.intent.EXTRA_PROMPT" />
-                <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 
-                //bis hier
+
+
             </intent-filter>
         </activity>
         <activity android:name=".level.LevelOneActivity"
@@ -35,6 +40,9 @@
             android:screenOrientation="landscape">
         </activity>
         <activity android:name=".level.LevelFourActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name="VoiceRecognitionActivity"
             android:screenOrientation="landscape">
         </activity>
     </application>
