@@ -32,13 +32,13 @@ public class Rabbit {
 
     public void loadPosition() {
         Random rand = new Random();
-        float max = maxWidth-50;
-        float min = 50;
+        float max = maxWidth-200;
+        float min = maxWidth/2;
 
         positionX = rand.nextFloat() * (max - min) + min;
 
         rand = new Random();
-        max = maxHeight-50;
+        max = maxHeight-200;
         min = 50;
 
         positionY = rand.nextFloat() * (max - min) + min;
@@ -52,13 +52,6 @@ public class Rabbit {
     public float getPositionY(){
         Log.d(TAG, "positionY: "+positionY);
         return positionY;
-    }
-
-    public boolean checkIfSkierCollide(float rabbitWidth, float rabbitHeight,float skierWidth, float skierHeight) {
-        if(skierWidth >= positionX && skierWidth <= positionX+rabbitWidth && skierHeight >= positionY && skierHeight <= positionY+rabbitHeight) {
-            return true;
-        }
-        return false;
     }
 
 

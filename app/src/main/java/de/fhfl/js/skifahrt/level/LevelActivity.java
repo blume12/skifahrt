@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Created by Jasmin on 19.11.2015.
  */
-abstract public class LevelActivity extends AppCompatActivity implements LevelWinFragment.OnFragmentInteractionListener, LevelLostFragment.OnFragmentInteractionListener{
+abstract public class LevelActivity extends AppCompatActivity implements LevelWinFragment.OnFragmentInteractionListener, LevelLostFragment.OnFragmentInteractionListener {
 
 
     public void reloadLevel(View view) {
@@ -25,16 +25,26 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         int[] firstPosition = new int[2];
         int[] secondPosition = new int[2];
 
-        // firstView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         skier.getLocationOnScreen(firstPosition);
         goal.getLocationOnScreen(secondPosition);
 
-        int skierX = firstPosition[0];
-        int skierY = skier.getMeasuredHeight() + firstPosition[1];
-        int goalX = secondPosition[0];
-        int goalY = secondPosition[1];
-        return (skierX >= goalX && skierX <= goalX+goal.getMeasuredWidth()&& skierY >= goalY && skierY <= goalY+goal.getMeasuredHeight());
+        int skierX1 = firstPosition[0];
+        int skierX2 = firstPosition[0]+skier.getMeasuredWidth();
+        int skierY1 = firstPosition[1];
+        int skierY2 = firstPosition[1] + skier.getMeasuredHeight();
+        int goalX1 = secondPosition[0];
+        int goalX2 = secondPosition[0] +  goal.getMeasuredHeight();
+        int goalY1 = secondPosition[1];
+        int goalY2 = secondPosition[1] + goal.getMeasuredHeight();
+        return (skierX2 >= goalX1 &&
+                skierY2 >= goalY1 &&
+                skierY1 <= goalY2 &&
+                skierX2 <= goalX2) ||
 
+                (skierX1 >= goalX1 &&
+                skierY2 >= goalY1 &&
+                skierY1 <= goalY2 &&
+                skierX1 <= goalX2);
     }
 
 }

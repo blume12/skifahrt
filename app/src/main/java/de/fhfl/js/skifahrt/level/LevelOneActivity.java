@@ -85,25 +85,15 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
+boolean lost = false;
+        if (isViewOverlapping(skifahrer, rabbit)) {
 
-        /*if (isViewOverlapping(skifahrer, rabbit)) {
-            Log.i(TAG, "Level verloren");
-
-
-            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
-
-            findViewById(R.id.level_lost).getLayoutParams().width = relativeLayout.getWidth();
-            findViewById(R.id.level_lost).getLayoutParams().height = relativeLayout.getHeight();
-
-            Fragment frag = new LevelLostFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.level_lost, frag);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(null);
-            ft.commit();
+            lost = true;
 
 
-        } else */if (isViewOverlapping(skifahrer, goal)) {
+        }
+
+        if (isViewOverlapping(skifahrer, goal)) {
             sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
 
             Log.d(TAG, "Ziel erreicht");
@@ -114,6 +104,20 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
             Fragment frag = new LevelWinFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.level_win, frag);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
+        } else if(lost) {
+
+            Log.i(TAG, "Level verloren");
+            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
+
+            findViewById(R.id.level_lost).getLayoutParams().width = relativeLayout.getWidth();
+            findViewById(R.id.level_lost).getLayoutParams().height = relativeLayout.getHeight();
+
+            Fragment frag = new LevelLostFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.level_lost, frag);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
             ft.commit();

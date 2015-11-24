@@ -72,8 +72,8 @@ public class SkierMoving {
     }
 
     public float getY() {
-        Log.d(TAG, "skierPositionY: " + skierPositionY);
-        Log.d(TAG, "maxHeight: " + (maxHeight - skierHeight));
+       // Log.d(TAG, "skierPositionY: " + skierPositionY);
+       // Log.d(TAG, "maxHeight: " + (maxHeight - skierHeight));
         if (skierPositionY <= 0.0) {
             return (float) 1.0;
         } else if (skierPositionY > maxHeight - skierHeight) {
