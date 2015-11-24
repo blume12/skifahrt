@@ -21,13 +21,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import de.fhfl.js.skifahrt.level.SkierMoving;
+
 public class VoiceRecognitionActivity extends AppCompatActivity implements
         RecognitionListener {
 
-    private TextView returnedText;
+    public TextView returnedText;
     private ToggleButton toggleButton;
     private ProgressBar progressBar;
-    private SpeechRecognizer speech = null;
+    private SpeechRecognizer speechRecognizer = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
 
@@ -39,37 +41,37 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
         returnedText = (TextView) findViewById(R.id.txtSpeechInput);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+        //progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        //toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
 
-        progressBar.setVisibility(View.INVISIBLE);
-        speech = SpeechRecognizer.createSpeechRecognizer(this);
-        speech.setRecognitionListener(this);
+       // progressBar.setVisibility(View.INVISIBLE);
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        speechRecognizer.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
-                "en");
+                "de");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
 
-        toggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    /**  toggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                if (isChecked) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setIndeterminate(true);
-                    speech.startListening(recognizerIntent);
-                } else {
+                if (isChecked) {*/
+                 //   progressBar.setVisibility(View.VISIBLE);
+                 //   progressBar.setIndeterminate(true);
+                    speechRecognizer.startListening(recognizerIntent);
+               /** } else {
                     progressBar.setIndeterminate(false);
                     progressBar.setVisibility(View.INVISIBLE);
                     speech.stopListening();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -81,8 +83,8 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        if (speech != null) {
-            speech.destroy();
+        if (speechRecognizer != null) {
+            speechRecognizer.destroy();
             Log.i(LOG_TAG, "destroy");
         }
 
@@ -91,8 +93,8 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
     @Override
     public void onBeginningOfSpeech() {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
-        progressBar.setIndeterminate(false);
-        progressBar.setMax(10);
+       // progressBar.setIndeterminate(false);
+       // progressBar.setMax(10);
     }
 
     @Override
@@ -103,16 +105,18 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
     @Override
     public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
-        progressBar.setIndeterminate(true);
-        toggleButton.setChecked(false);
+       // progressBar.setIndeterminate(true);
+     //   toggleButton.setChecked(false);
+
+        speechRecognizer.startListening(recognizerIntent);
     }
 
     @Override
     public void onError(int errorCode) {
-        String errorMessage = getErrorText(errorCode);
+    /**   String errorMessage = getErrorText(errorCode);
         Log.d(LOG_TAG, "FAILED " + errorMessage);
         returnedText.setText(errorMessage);
-        toggleButton.setChecked(false);
+        toggleButton.setChecked(false);*/
     }
 
     @Override
@@ -133,6 +137,8 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
             setPartialResult(results);
         }*/
         returnedText.setText(text);
+
+
     }
 
     @Override
@@ -149,17 +155,20 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
             text += result + "\n";
 
         returnedText.setText(text);
+        speechRecognizer.startListening(recognizerIntent);
+
+       // if(matches.toString().equalsIgnoreCase("rechts") || matches.toString().equalsIgnoreCase("brechts") || matches.toString().equalsIgnoreCase("reichts"){
+
+        //}
     }
 
     @Override
     public void onRmsChanged(float rmsdB) {
-        Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
+        /**  Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
         progressBar.setProgress((int) rmsdB);
-
-
+         */
     }
-
-    public static String getErrorText(int errorCode) {
+   /** public static String getErrorText(int errorCode) {
         String message;
         switch (errorCode) {
             case SpeechRecognizer.ERROR_AUDIO:
@@ -195,5 +204,5 @@ public class VoiceRecognitionActivity extends AppCompatActivity implements
         }
         return message;
     }
-
+*/
 }
