@@ -4,4 +4,10 @@
     <string name="level_name_two">Level 2</string>
     <string name="level_name_three">Level 3</string>
     <string name="level_name_four">Level 4</string>
+
+    //Femke test ab hier
+
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
 </resources>

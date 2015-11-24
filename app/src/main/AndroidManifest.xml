@@ -13,8 +13,16 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                //Femke Test ab hier
+                <action android:name="android.intent.ACTION_RECOGNIZE_SPEECH" />
+                <action android:name="android.intent.LANGUAGE_MODEL_FREE_FORM"/>
+                <action android:name="android.intent.EXTRA_PROMPT" />
+                <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+                //bis hier
             </intent-filter>
         </activity>
         <activity android:name=".level.LevelOneActivity"
