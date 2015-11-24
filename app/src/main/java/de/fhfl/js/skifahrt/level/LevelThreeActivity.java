@@ -9,7 +9,7 @@ import de.fhfl.js.skifahrt.R;
 /**
  * Created by Jasmin on 17.11.2015.
  */
-public class LevelThreeActivity extends AppCompatActivity {
+public class LevelThreeActivity extends LevelActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

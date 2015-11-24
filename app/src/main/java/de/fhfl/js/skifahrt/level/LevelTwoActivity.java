@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import de.fhfl.js.skifahrt.R;
 
 
-public class LevelTwoActivity extends AppCompatActivity implements
+public class LevelTwoActivity extends LevelActivity implements
         RecognitionListener {
 
     public TextView returnedText;
