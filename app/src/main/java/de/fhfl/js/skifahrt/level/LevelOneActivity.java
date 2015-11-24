@@ -11,6 +11,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
     private ImageView skifahrer;
     private ImageView rabbit;
     private Rabbit rabbitView;
+    private ImageView goal;
     private SkierMoving skier;
     private RelativeLayout relativeLayout;
     private boolean firstCall = true;
@@ -56,6 +58,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
 
         skifahrer = (ImageView) findViewById(R.id.skifahrer);
         rabbit = (ImageView) findViewById(R.id.imageView3);
+        goal = (ImageView) findViewById(R.id.goal);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
         rabbitView = new Rabbit();
         skier = new SkierMoving();
@@ -83,9 +86,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
             return;
         }
 
-        //if(rabbitView.checkIfSkierCollide(rabbit.getWidth(), rabbit.getHeight(), skifahrer.getWidth(), skifahrer.getHeight())) {
-        if (skifahrer.getX() > 500) {
-         // if(isViewOverlapping(skifahrer, rabbit)) {
+        /*if (isViewOverlapping(skifahrer, rabbit)) {
             Log.i(TAG, "Level verloren");
 
 
@@ -102,6 +103,20 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
             ft.commit();
 
 
+        } else */if (isViewOverlapping(skifahrer, goal)) {
+            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
+
+            Log.d(TAG, "Ziel erreicht");
+
+            findViewById(R.id.level_win).getLayoutParams().width = relativeLayout.getWidth();
+            findViewById(R.id.level_win).getLayoutParams().height = relativeLayout.getHeight();
+
+            Fragment frag = new LevelWinFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.level_win, frag);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
         } else {
             // Landscape mode
             skier.setEventValuesToDimensions(event, mDisplay);

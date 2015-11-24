@@ -1,28 +1,19 @@
 package de.fhfl.js.skifahrt.level;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import de.fhfl.js.skifahrt.R;
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LevelLostFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LevelLostFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Jasmin on 24.11.2015.
  */
-public class LevelLostFragment extends Fragment {
-
-    boolean lost  = true;
+public class LevelWinFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -30,16 +21,16 @@ public class LevelLostFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment LevelLost.
+     * @return A new instance of fragment LevelWinFragment.
      */
-    public static LevelLostFragment newInstance() {
-        LevelLostFragment fragment = new LevelLostFragment();
+    public static LevelWinFragment newInstance() {
+        LevelWinFragment fragment = new LevelWinFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public LevelLostFragment() {
+    public LevelWinFragment() {
         // Required empty public constructor
     }
 
@@ -52,7 +43,7 @@ public class LevelLostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(lost ? R.layout.fragment_level_lost : R.layout.fragment_level_win, container, false);
+        return inflater.inflate(R.layout.fragment_level_win, container, false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -60,8 +51,6 @@ public class LevelLostFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-
 
     @Override
     public void onAttach(Activity activity) {

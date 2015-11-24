@@ -7,4 +7,6 @@
 
     <string name="level_lost_headline">Level verloren!</string>
     <string name="level_lost_refresh">Erneut versuchen</string>
+    <string name="level_win_headline">Level gewonnen!</string>
+    <string name="level_win_button">Nächstes Level</string>
 </resources>

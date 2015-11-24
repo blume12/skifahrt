@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Created by Jasmin on 19.11.2015.
  */
-abstract public class LevelActivity extends AppCompatActivity implements LevelLostFragment.OnFragmentInteractionListener{
+abstract public class LevelActivity extends AppCompatActivity implements LevelWinFragment.OnFragmentInteractionListener, LevelLostFragment.OnFragmentInteractionListener{
 
 
     public void reloadLevel(View view) {
@@ -21,18 +21,20 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelLo
 
     }
 
-
-    protected boolean isViewOverlapping(View firstView, View secondView) {
+    protected boolean isViewOverlapping(View skier, View goal) {
         int[] firstPosition = new int[2];
         int[] secondPosition = new int[2];
 
-        firstView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        firstView.getLocationOnScreen(firstPosition);
-        secondView.getLocationOnScreen(secondPosition);
+        // firstView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        skier.getLocationOnScreen(firstPosition);
+        goal.getLocationOnScreen(secondPosition);
 
-        int r = firstView.getMeasuredWidth() + firstPosition[0];
-        int l = secondPosition[0];
-        return r >= l && (r != 0 && l != 0);
+        int skierX = firstPosition[0];
+        int skierY = skier.getMeasuredHeight() + firstPosition[1];
+        int goalX = secondPosition[0];
+        int goalY = secondPosition[1];
+        return (skierX >= goalX && skierX <= goalX+goal.getMeasuredWidth()&& skierY >= goalY && skierY <= goalY+goal.getMeasuredHeight());
+
     }
 
 }
