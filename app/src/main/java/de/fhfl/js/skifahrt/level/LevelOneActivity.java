@@ -11,12 +11,13 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import de.fhfl.js.skifahrt.R;
+import de.fhfl.js.skifahrt.movingObject.Rabbit;
+import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel1;
 
 /**
  * Created by Jasmin on 17.11.2015.
@@ -34,7 +35,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
     private ImageView rabbit;
     private Rabbit rabbitView;
     private ImageView goal;
-    private SkierMoving skier;
+    private SkierMovingLevel1 skier;
     private RelativeLayout relativeLayout;
     private boolean firstCall = true;
 
@@ -61,7 +62,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         goal = (ImageView) findViewById(R.id.goal);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
         rabbitView = new Rabbit();
-        skier = new SkierMoving();
+        skier = new SkierMovingLevel1();
     }
 
     @Override
