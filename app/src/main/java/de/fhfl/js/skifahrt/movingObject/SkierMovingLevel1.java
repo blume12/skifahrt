@@ -9,6 +9,7 @@ import android.view.Surface;
  */
 public class SkierMovingLevel1 extends SkierMoving {
 
+    @Override
     public void setEventValuesToDimensions(SensorEvent event, Display display) {
         switch (display.getRotation()) {
             case Surface.ROTATION_90:

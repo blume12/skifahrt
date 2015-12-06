@@ -1,9 +1,12 @@
 package de.fhfl.js.skifahrt.movingObject;
 
+import android.hardware.SensorEvent;
+import android.view.Display;
+
 /**
  * Created by Jasmin on 06.12.2015.
  */
-abstract public class SkierMoving  extends  MovingObject{
+abstract public class SkierMoving extends MovingObject {
 
     private String TAG = "SkierMoving";
 
@@ -43,6 +46,10 @@ abstract public class SkierMoving  extends  MovingObject{
             return maxHeight - skierHeight - 1;
         }
         return mSensorY + skierPositionY;
+    }
+
+    public void setEventValuesToDimensions(SensorEvent event, Display display) {
+
     }
 
 }

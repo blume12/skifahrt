@@ -11,8 +11,10 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import de.fhfl.js.skifahrt.R;
@@ -31,20 +33,9 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
     private WindowManager mWindowManager;
     private Display mDisplay;
 
-    private ImageView skifahrer;
-    private ImageView rabbit;
-    private Rabbit rabbitView;
-    private ImageView goal;
-    private SkierMovingLevel1 skier;
-    private RelativeLayout relativeLayout;
-    private boolean firstCall = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
-
-
         //Ansprechen des Sensor-Services
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         //Auswahl des Sensortyps
@@ -57,28 +48,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mDisplay = mWindowManager.getDefaultDisplay();
 
-        skifahrer = (ImageView) findViewById(R.id.skifahrer);
-        rabbit = (ImageView) findViewById(R.id.imageView3);
-        goal = (ImageView) findViewById(R.id.goal);
-        relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
-        rabbitView = new Rabbit();
         skier = new SkierMovingLevel1();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        if (hasFocus && firstCall) {
-            skier.setMaxHeight(relativeLayout.getHeight());
-            skier.setMaxWidth(relativeLayout.getWidth());
-            skier.setSkierHeight(skifahrer.getHeight());
-
-            rabbitView.setMaxHeight(relativeLayout.getHeight());
-            rabbitView.setMaxWidth(relativeLayout.getWidth());
-            rabbitView.loadPosition();
-            rabbit.setX(rabbitView.getPositionX());
-            rabbit.setY(rabbitView.getPositionY());
-            firstCall = false;
-        }
     }
 
     @Override
@@ -86,46 +56,22 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
-        boolean lost = false;
-        if (isViewOverlapping(skifahrer, rabbit)) {
-            lost = true;
-        }
 
-        if (isViewOverlapping(skifahrer, goal)) {
+        if (isViewOverlapping(getSkierImageView(), getGoalImageView())) {
             sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
-
             Log.d(TAG, "Ziel erreicht");
-            findViewById(R.id.level_win).getLayoutParams().width = relativeLayout.getWidth();
-            findViewById(R.id.level_win).getLayoutParams().height = relativeLayout.getHeight();
-
-            Fragment frag = new LevelWinFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.level_win, frag);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(null);
-            ft.commit();
-        } else if (lost) {
-
+            openWinDialog();
+        } else if (isViewOverlapping(getSkierImageView(), getRabbitImageView())) {
             Log.i(TAG, "Level verloren");
             sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
-
-            findViewById(R.id.level_lost).getLayoutParams().width = relativeLayout.getWidth();
-            findViewById(R.id.level_lost).getLayoutParams().height = relativeLayout.getHeight();
-
-            Fragment frag = new LevelLostFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.level_lost, frag);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(null);
-            ft.commit();
+            openLostDialog();
         } else {
             // Landscape mode
             skier.setEventValuesToDimensions(event, mDisplay);
-            skier.setSkierPositionX(skifahrer.getX());
-            skier.setSkierPositionY(skifahrer.getY());
-            skifahrer.setX(skier.getX());
-            skifahrer.setY(skier.getY());
-
+            skier.setSkierPositionX(getSkierImageView().getX());
+            skier.setSkierPositionY(getSkierImageView().getY());
+            getSkierImageView().setX(skier.getX());
+            getSkierImageView().setY(skier.getY());
         }
     }
 

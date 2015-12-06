@@ -1,75 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/levelScreen"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/levelScreen">
+    android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/imageView"
-        android:src="@drawable/skipiste"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:src="@drawable/skipiste" />
 
     <ImageView
+        android:id="@+id/skifahrer"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/skifahrer"
-        android:src="@drawable/skier"
-        android:background="@color/colorError"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="37dp"
-        android:layout_marginStart="37dp" />
+        android:layout_marginStart="37dp"
+        android:background="@color/colorError"
+        android:src="@drawable/skier" />
 
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:id="@+id/imageView3"
-        android:src="@drawable/hase"
-        android:background="@color/colorError"
-        android:layout_marginRight="105dp"
-        android:layout_marginEnd="105dp"
-        android:layout_alignTop="@+id/skifahrer"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/goal"
-        android:src="@drawable/line"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="41dp"
-        android:layout_marginEnd="41dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/skifahrer"
+        android:layout_marginEnd="105dp"
+        android:layout_marginRight="105dp"
+        android:background="@color/colorError"
+        android:src="@drawable/hase" />
 
     <ImageView
+        android:id="@+id/goal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:src="@drawable/line" />
+
+    <ImageView
         android:id="@+id/imageView5"
-        android:src="@drawable/line"
-        android:layout_alignTop="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/skifahrer"
-        android:layout_alignStart="@+id/skifahrer" />
+        android:layout_alignStart="@+id/skifahrer"
+        android:layout_alignTop="@+id/goal"
+        android:src="@drawable/line" />
 
 
-    <fragment android:name="de.fhfl.js.skifahrt.level.LevelLostFragment"
-        android:id="@+id/level_win"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:id="@+id/layoutFragmentLost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-    <fragment android:name="de.fhfl.js.skifahrt.level.LevelLostFragment"
-        android:id="@+id/level_lost"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"/>
+        <fragment
+            android:id="@+id/level_win"
+            android:name="de.fhfl.js.skifahrt.level.LevelLostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutFragmentWin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <fragment
+            android:id="@+id/level_lost"
+            android:name="de.fhfl.js.skifahrt.level.LevelWinFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 
     <TextView
@@ -81,10 +99,6 @@
         android:layout_marginTop="100dp"
         android:textSize="26dp"
         android:textStyle="normal" />
-
-
-
-
 
 
 </RelativeLayout>
