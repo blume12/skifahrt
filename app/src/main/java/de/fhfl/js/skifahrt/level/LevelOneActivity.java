@@ -85,19 +85,15 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
-boolean lost = false;
+        boolean lost = false;
         if (isViewOverlapping(skifahrer, rabbit)) {
-
             lost = true;
-
-
         }
 
         if (isViewOverlapping(skifahrer, goal)) {
             sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
 
             Log.d(TAG, "Ziel erreicht");
-
             findViewById(R.id.level_win).getLayoutParams().width = relativeLayout.getWidth();
             findViewById(R.id.level_win).getLayoutParams().height = relativeLayout.getHeight();
 
@@ -107,7 +103,7 @@ boolean lost = false;
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
             ft.commit();
-        } else if(lost) {
+        } else if (lost) {
 
             Log.i(TAG, "Level verloren");
             sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
