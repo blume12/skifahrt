@@ -5,24 +5,17 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
-
-
-
 /**
  * Created by Admin on 24.11.2015.
  */
 
-
-
-
 import de.fhfl.js.skifahrt.R;
+import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel2;
 
 
 public class LevelTwoActivity extends LevelActivity implements
@@ -37,7 +30,6 @@ public class LevelTwoActivity extends LevelActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
         returnedText = (TextView) findViewById(R.id.txtSpeechInput);
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -53,6 +45,7 @@ public class LevelTwoActivity extends LevelActivity implements
 
 
         speechRecognizer.startListening(recognizerIntent);
+        skier = new SkierMovingLevel2();
 
 
     }

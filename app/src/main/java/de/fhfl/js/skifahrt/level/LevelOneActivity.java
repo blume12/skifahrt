@@ -1,8 +1,6 @@
 package de.fhfl.js.skifahrt.level;
 
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,14 +9,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import de.fhfl.js.skifahrt.R;
-import de.fhfl.js.skifahrt.movingObject.Rabbit;
 import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel1;
 
 /**

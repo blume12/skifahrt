@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import de.fhfl.js.skifahrt.MainActivity;
 import de.fhfl.js.skifahrt.R;
 import de.fhfl.js.skifahrt.movingObject.Rabbit;
 import de.fhfl.js.skifahrt.movingObject.SkierMoving;
-import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel1;
 
 /**
  * Created by Jasmin on 19.11.2015.
@@ -66,6 +66,16 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
             rabbit.setY(rabbitView.getPositionY());
             firstCall = false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Go to the Main menu. If this wouldn't call, the fragments will be call at backPressed
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
+
+        // Otherwise defer to system default behavior.
+        super.onBackPressed();
     }
 
 
