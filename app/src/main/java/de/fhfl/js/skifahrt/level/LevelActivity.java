@@ -38,12 +38,18 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
     private int levelStep = 1;
     private static final int maxSteps = 10;
 
+    private int life = 1;
+    private static final int maxLife = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
         if (getIntent().getExtras() != null) {
             levelStep = getIntent().getIntExtra("levelStep", 1);
+        }
+        if (getIntent().getExtras() != null) {
+            life = getIntent().getIntExtra("life", 1);
         }
         TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
         levelStepOutput.setText(levelStep + "/" + maxSteps);
@@ -88,7 +94,11 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
 
 
     public void reloadLevel(View view) {
-        Intent intent = new Intent(this, this.getClass());
+        life++;
+        Class nextClassLevel = this.getClass();
+
+        Intent intent = new Intent(this,nextClassLevel);
+        intent.putExtra("life", life);
         intent.putExtra("levelStep", levelStep);
         this.startActivity(intent);
     }
@@ -118,6 +128,7 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
 
         Log.d(TAG, "LevelStep bevor:" + levelStep);
         intent.putExtra("levelStep", levelStep);
+        intent.putExtra("life", life);
         this.startActivity(intent);
     }
 
@@ -176,8 +187,15 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
     }
 
     protected void openLostDialog() {
-        layoutLost.setVisibility(View.VISIBLE);
+        if (life >= maxLife) {
+            // maximale lebensanzahl erreicht. Zurück zur MainActivity
+            life = 1;
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            return;
+        }
 
+        layoutLost.setVisibility(View.VISIBLE);
         Fragment frag = new LevelLostFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.level_lost, frag);
