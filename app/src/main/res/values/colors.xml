@@ -6,4 +6,5 @@
     <color name="colorWin">#46693f</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorOverlay">#a46b6b6b</color>
+    <color name="colorBlack">#000000</color>
 </resources>

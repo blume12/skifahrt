@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import de.fhfl.js.skifahrt.MainActivity;
 import de.fhfl.js.skifahrt.R;
@@ -21,26 +23,31 @@ import de.fhfl.js.skifahrt.movingObject.SkierMoving;
  */
 abstract public class LevelActivity extends AppCompatActivity implements LevelWinFragment.OnFragmentInteractionListener, LevelLostFragment.OnFragmentInteractionListener {
 
+    private static final String TAG = "LevelActivity";
 
     private LinearLayout layoutWin;
     private LinearLayout layoutLost;
-
     private ImageView skifahrer;
     private ImageView rabbit;
     private Rabbit rabbitView;
     private ImageView goal;
-
     protected SkierMoving skier;
-
     private RelativeLayout relativeLayout;
-
-
     private boolean firstCall = true;
+
+    private int levelStep = 1;
+    private static final int maxSteps = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
+        if (getIntent().getExtras() != null) {
+            levelStep = getIntent().getIntExtra("levelStep", 1);
+        }
+        TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
+        levelStepOutput.setText(levelStep + "/" + maxSteps);
+
         layoutWin = (LinearLayout) findViewById(R.id.layoutFragmentWin);
         layoutLost = (LinearLayout) findViewById(R.id.layoutFragmentLost);
 
@@ -58,6 +65,7 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
             skier.setMaxHeight(relativeLayout.getHeight());
             skier.setMaxWidth(relativeLayout.getWidth());
             skier.setSkierHeight(skifahrer.getHeight());
+            skier.addToSpeed(levelStep);
 
             rabbitView.setMaxHeight(relativeLayout.getHeight());
             rabbitView.setMaxWidth(relativeLayout.getWidth());
@@ -81,6 +89,35 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
 
     public void reloadLevel(View view) {
         Intent intent = new Intent(this, this.getClass());
+        intent.putExtra("levelStep", levelStep);
+        this.startActivity(intent);
+    }
+
+    public void nextLevel(View view) {
+        levelStep++;
+        Class nextClassLevel = this.getClass();
+        Log.d(TAG, "" + this.getClass().getSimpleName());
+        if (levelStep > maxSteps) {
+            switch (this.getClass().getSimpleName()) {
+                case "LevelOneActivity":
+                    nextClassLevel = LevelTwoActivity.class;
+                    break;
+                case "LevelTwoActivity":
+                    nextClassLevel = LevelThreeActivity.class;
+                    break;
+                case "LevelThreeActivity":
+                    nextClassLevel = LevelFourActivity.class;
+                    break;
+                case "LevelFourActivity":
+                    nextClassLevel = MainActivity.class;
+                    break;
+            }
+            levelStep = 1;
+        }
+        Intent intent = new Intent(this, nextClassLevel);
+
+        Log.d(TAG, "LevelStep bevor:" + levelStep);
+        intent.putExtra("levelStep", levelStep);
         this.startActivity(intent);
     }
 

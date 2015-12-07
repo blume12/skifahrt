@@ -16,6 +16,17 @@
         android:scaleType="fitXY"
         android:src="@drawable/skipiste" />
 
+    <TextView
+        android:id="@+id/levelStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/layoutFragmentLost"
+        android:layout_alignEnd="@+id/goal"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/goal"
+        android:text="1/10"
+        android:textColor="@color/colorBlack" />
+
     <ImageView
         android:id="@+id/skifahrer"
         android:layout_width="80dp"
