@@ -18,8 +18,7 @@ import de.fhfl.js.skifahrt.R;
 import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel2;
 
 
-public class LevelTwoActivity extends LevelActivity implements
-        RecognitionListener {
+public class LevelTwoActivity extends LevelActivity implements RecognitionListener {
 
     public TextView returnedText;
     private SpeechRecognizer speechRecognizer = null;
