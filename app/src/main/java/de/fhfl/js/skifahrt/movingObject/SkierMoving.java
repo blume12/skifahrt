@@ -13,6 +13,8 @@ abstract public class SkierMoving extends MovingObject {
     protected float mSensorX;
     protected float mSensorY;
 
+    private float speed = 0.0F;
+
     private float skierHeight;
 
     private float skierPositionX;
@@ -34,7 +36,7 @@ abstract public class SkierMoving extends MovingObject {
         if (mSensorX > 0) {
             return mSensorX + skierPositionX;
         }
-        return skierPositionX + (float) 0.1;
+        return skierPositionX + speed;
     }
 
     public float getY() {
@@ -43,13 +45,17 @@ abstract public class SkierMoving extends MovingObject {
         if (skierPositionY <= 0.0) {
             return (float) 1.0;
         } else if (skierPositionY > maxHeight - skierHeight) {
-            return maxHeight - skierHeight - 1;
+            return maxHeight - skierHeight - speed;
         }
         return mSensorY + skierPositionY;
     }
 
     public void setEventValuesToDimensions(SensorEvent event, Display display) {
 
+    }
+
+    public void addToSpeed(int levelStep) {
+        speed = speed + levelStep;
     }
 
 }

@@ -18,7 +18,7 @@ import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel1;
  */
 public class LevelOneActivity extends LevelActivity implements SensorEventListener {
 
-    private String TAG = "LevelOneActivity";
+    private static final String TAG = "LevelOneActivity";
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
