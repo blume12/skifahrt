@@ -3,6 +3,7 @@ package de.fhfl.js.skifahrt.level;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import de.fhfl.js.skifahrt.R;
 
@@ -11,10 +12,13 @@ import de.fhfl.js.skifahrt.R;
  */
 public class LevelThreeActivity extends LevelActivity {
 
+    public ImageView skifahrer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
+
+        skifahrer = (ImageView) findViewById(R.id.skifahrer);
     }
 
 

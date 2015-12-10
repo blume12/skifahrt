@@ -6,6 +6,8 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,15 +24,17 @@ public class LevelTwoActivity extends LevelActivity implements
         RecognitionListener {
 
     public TextView returnedText;
+    public ImageView skifahrer;
     private SpeechRecognizer speechRecognizer = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
-
+    TranslateAnimation animation = new TranslateAnimation(0, 1800 , 0, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         returnedText = (TextView) findViewById(R.id.txtSpeechInput);
+        skifahrer = (ImageView) findViewById(R.id.skifahrer);
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizer.setRecognitionListener(this);
@@ -47,7 +51,13 @@ public class LevelTwoActivity extends LevelActivity implements
         speechRecognizer.startListening(recognizerIntent);
         skier = new SkierMovingLevel2();
 
+        //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+        animation.setDuration(10000);  // animation duration
+        animation.setRepeatCount(0);  // animation repeat count
+        animation.setRepeatMode(0);   // repeat animation (left to right, right to left )
+        //animation.setFillAfter(true);
 
+        skifahrer.startAnimation(animation);
     }
 
     @Override
@@ -98,11 +108,10 @@ public class LevelTwoActivity extends LevelActivity implements
         Log.i(LOG_TAG, "onPartialResults");
         ArrayList<String> matches = arg0.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
-      //  for (String result : matches) text += result + "\n";
+      for (String result : matches) text += result + "\n";
 
         returnedText.setText(text);
         speechRecognizer.startListening(recognizerIntent);
-
 
     }
 
@@ -116,13 +125,38 @@ public class LevelTwoActivity extends LevelActivity implements
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
-        for (String result : matches)
+        for (String result : matches) {
             text += result + "\n";
+        }
 
-        returnedText.setText(text);
-        speechRecognizer.startListening(recognizerIntent);
 
-        // if(matches.toString().equalsIgnoreCase("rechts") || matches.toString().equalsIgnoreCase("brechts") || matches.toString().equalsIgnoreCase("reichts"){
+            returnedText.setText(text);
+
+        if (matches.get(0).toString().equalsIgnoreCase("hoch") || matches.get(0).toString().equalsIgnoreCase("koch") || matches.get(0).toString().equalsIgnoreCase("^")) {
+            Log.i(LOG_TAG, "hooch");
+            //getSkierImageView().setX(skier.getX());
+            //getSkierImageView().setY(skier.getY());
+           // skifahrer.setY(skifahrer.getY() -100);
+            //skifahrer.setX(skifahrer.getX() + 100);
+           TranslateAnimation animation = new TranslateAnimation(skifahrer.getX(),skifahrer.getX()+50 , skifahrer.getY(), skifahrer.getY()+50);
+            skifahrer.startAnimation(animation);
+        }
+
+        if (matches.get(0).toString().equalsIgnoreCase("runter") || matches.get(0).toString().equalsIgnoreCase("unter") || matches.get(0).toString().equalsIgnoreCase("fronter")) {
+            Log.i(LOG_TAG, "ruunter");
+            //getSkierImageView().setX(skier.getX());
+            //getSkierImageView().setY(skier.getY());
+            skifahrer.setY(skifahrer.getY() + 100);
+            skifahrer.setX(skifahrer.getX() + 100);
+        }
+
+
+
+
+            speechRecognizer.startListening(recognizerIntent);
+
+
+
 
         //}
     }
