@@ -1,10 +1,7 @@
 package de.fhfl.js.skifahrt.level;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -12,10 +9,8 @@ import android.widget.TextView;
 import android.widget.ImageView;
 
 import java.util.Timer;
-import java.util.logging.Handler;
 
 import de.fhfl.js.skifahrt.R;
-import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel2;
 
 
 /**
@@ -23,10 +18,23 @@ import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel2;
  */
 public class LevelThreeActivity extends LevelActivity  {
 
+    public ImageView skifahrer;
+    public TextView gestureEvent;
+    String TAG = "adfs";
+    Timer timer;
+    private CountDownTimer myTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
+        gestureEvent = (TextView) findViewById(R.id.txtSpeechInput);
+        skifahrer = (ImageView) findViewById(R.id.skifahrer);
+
+    }
+
+    @Override
+    protected void stopEvent() {
+
     }
 
     @Override
