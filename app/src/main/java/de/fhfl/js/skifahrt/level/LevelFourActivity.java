@@ -17,5 +17,10 @@ public class LevelFourActivity extends LevelActivity {
         setContentView(R.layout.activity_level);
     }
 
+    @Override
+    protected void stopEvent() {
+
+    }
+
 
 }

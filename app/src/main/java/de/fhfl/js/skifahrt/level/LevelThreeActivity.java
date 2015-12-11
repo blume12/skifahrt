@@ -23,38 +23,10 @@ import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel2;
  */
 public class LevelThreeActivity extends LevelActivity  {
 
-    public ImageView skifahrer;
-    public TextView gestureEvent;
-    String TAG = "adfs";
-    Timer timer;
-    private CountDownTimer myTimer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gestureEvent = (TextView)findViewById(R.id.txtSpeechInput);
-        skifahrer = (ImageView)findViewById(R.id.skifahrer);
-        skier = new SkierMovingLevel2();
-
-        myTimer = new CountDownTimer(10*1000,100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.v(TAG, "CountDownTimer.onTick(): sUntilFinished:" + millisUntilFinished / 1000);
-
-                gestureEvent.setText("" + (Math.ceil(millisUntilFinished/1000d)));
-                skifahrer.setX(skifahrer.getX() +10);
-
-            }
-
-            @Override
-            public void onFinish() {
-                Log.v(TAG, "CountDownTimer.onFinish()");
-
-
-                gestureEvent.setText("0");
-
-            }
-        } .start();
+        setContentView(R.layout.activity_level);
     }
 
     @Override
