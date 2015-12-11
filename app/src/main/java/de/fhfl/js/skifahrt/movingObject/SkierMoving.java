@@ -6,12 +6,12 @@ import android.view.Display;
 /**
  * Created by Jasmin on 06.12.2015.
  */
-abstract public class SkierMoving extends MovingObject {
+ public class SkierMoving extends MovingObject {
 
     private String TAG = "SkierMoving";
 
-    protected float mSensorX;
-    protected float mSensorY;
+    protected float moveX;
+    protected float moveY;
 
     private float speed = 0.0F;
 
@@ -33,8 +33,8 @@ abstract public class SkierMoving extends MovingObject {
     }
 
     public float getX() {
-        if (mSensorX > 0) {
-            return mSensorX + skierPositionX;
+        if (moveX > 0) {
+            return moveX + skierPositionX;
         }
         return skierPositionX + speed;
     }
@@ -47,15 +47,19 @@ abstract public class SkierMoving extends MovingObject {
         } else if (skierPositionY > maxHeight - skierHeight) {
             return maxHeight - skierHeight - speed;
         }
-        return mSensorY + skierPositionY;
-    }
-
-    public void setEventValuesToDimensions(SensorEvent event, Display display) {
-
+        return moveY + skierPositionY;
     }
 
     public void addToSpeed(int levelStep) {
         speed = speed + levelStep;
+    }
+
+    public void setMoveX(float moveX) {
+        this.moveX = moveX;
+    }
+
+    public void setMoveY(float moveY) {
+        this.moveY = moveY;
     }
 
 }

@@ -21,5 +21,10 @@ public class LevelThreeActivity extends LevelActivity {
         skifahrer = (ImageView) findViewById(R.id.skifahrer);
     }
 
+    @Override
+    protected void stopEvent() {
+
+    }
+
 
 }

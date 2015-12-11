@@ -62,6 +62,7 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         goal = (ImageView) findViewById(R.id.goal);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
         rabbitView = new Rabbit();
+        skier = new SkierMoving();
     }
 
 
@@ -97,7 +98,7 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         life++;
         Class nextClassLevel = this.getClass();
 
-        Intent intent = new Intent(this,nextClassLevel);
+        Intent intent = new Intent(this, nextClassLevel);
         intent.putExtra("life", life);
         intent.putExtra("levelStep", levelStep);
         this.startActivity(intent);
@@ -203,6 +204,45 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    protected void runSkier() {
+        runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              try {
+                                  //Log.d(TAG, "Run");
+                                  //Log.d(TAG, "moveX: " + (skifahrer.getX() + moveX));
+
+
+                                  if (isViewOverlapping(getSkierImageView(), getGoalImageView())) {
+                                      Log.d(TAG, "Ziel erreicht");
+                                      openWinDialog();
+                                      stopEvent();
+                                  } else if (isViewOverlapping(getSkierImageView(), getRabbitImageView())) {
+                                      Log.i(TAG, "Level verloren");
+                                      openLostDialog();
+                                      stopEvent();
+                                  } else {
+                                      skier.setSkierPositionX(getSkierImageView().getX());
+                                      skier.setSkierPositionY(getSkierImageView().getY());
+                                     /* if (skier.isYOutOfWindow()) {
+                                          stopEvent();
+                                          openLostDialog();
+                                      } else {*/
+                                          getSkierImageView().setX(skier.getX());
+                                          getSkierImageView().setY(skier.getY());
+                                      //}
+                                  }
+                              } catch (Exception e) {
+                                  System.out.print(e);
+                              }
+                          }
+                      }
+
+        );
+    }
+
+    abstract protected void stopEvent();
 
 
 }

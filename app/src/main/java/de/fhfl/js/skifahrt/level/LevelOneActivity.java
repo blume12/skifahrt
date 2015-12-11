@@ -7,11 +7,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
+import android.view.Surface;
 import android.view.WindowManager;
-
-import de.fhfl.js.skifahrt.movingObject.SkierMovingLevel1;
 
 /**
  * Created by Jasmin on 17.11.2015.
@@ -39,8 +37,11 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         // Get an instance of the WindowManager
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mDisplay = mWindowManager.getDefaultDisplay();
+    }
 
-        skier = new SkierMovingLevel1();
+    @Override
+    protected void stopEvent() {
+        sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
     }
 
     @Override
@@ -48,23 +49,19 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
-
-        if (isViewOverlapping(getSkierImageView(), getGoalImageView())) {
-            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
-            Log.d(TAG, "Ziel erreicht");
-            openWinDialog();
-        } else if (isViewOverlapping(getSkierImageView(), getRabbitImageView())) {
-            Log.i(TAG, "Level verloren");
-            sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
-            openLostDialog();
-        } else {
-            // Landscape mode
-            skier.setEventValuesToDimensions(event, mDisplay);
-            skier.setSkierPositionX(getSkierImageView().getX());
-            skier.setSkierPositionY(getSkierImageView().getY());
-            getSkierImageView().setX(skier.getX());
-            getSkierImageView().setY(skier.getY());
+        switch (mDisplay.getRotation()) {
+            case Surface.ROTATION_90:
+            case Surface.ROTATION_180:
+                skier.setMoveX(event.values[1]);
+                skier.setMoveY(event.values[0]);
+                break;
+            case Surface.ROTATION_270:
+            case Surface.ROTATION_0:
+                skier.setMoveX(event.values[0]);
+                skier.setMoveX(event.values[1]);
+                break;
         }
+        runSkier();
     }
 
     @Override
