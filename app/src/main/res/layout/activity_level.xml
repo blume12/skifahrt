@@ -82,7 +82,7 @@
 
         <fragment
             android:id="@+id/level_win"
-            android:name="de.fhfl.js.skifahrt.level.LevelLostFragment"
+            android:name="de.fhfl.js.skifahrt.level.fragment.LevelLostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -96,7 +96,7 @@
 
         <fragment
             android:id="@+id/level_lost"
-            android:name="de.fhfl.js.skifahrt.level.LevelWinFragment"
+            android:name="de.fhfl.js.skifahrt.level.fragment.LevelWinFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

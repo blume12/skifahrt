@@ -20,13 +20,15 @@ import java.util.concurrent.TimeUnit;
 
 import de.fhfl.js.skifahrt.MainActivity;
 import de.fhfl.js.skifahrt.R;
+import de.fhfl.js.skifahrt.level.fragment.LevelLostFragment;
+import de.fhfl.js.skifahrt.level.fragment.LevelWinFragment;
 import de.fhfl.js.skifahrt.movingObject.Rabbit;
 import de.fhfl.js.skifahrt.movingObject.SkierMoving;
 
 /**
  * Created by Jasmin on 19.11.2015.
  */
-abstract public class LevelActivity extends AppCompatActivity implements LevelWinFragment.OnFragmentInteractionListener, LevelLostFragment.OnFragmentInteractionListener {
+abstract public class LevelActivity extends AppCompatActivity {
 
     private static final String TAG = "LevelActivity";
 
@@ -184,11 +186,6 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         this.startActivity(intent);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
     private boolean isViewOverlapping(View skier, View goal) {
         int[] firstPosition = new int[2];
         int[] secondPosition = new int[2];
@@ -237,7 +234,6 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         ft.addToBackStack(null);
         ft.commit();
         layoutWin.setVisibility(View.VISIBLE);
-        layoutWin.bringToFront();
     }
 
     private void openLostDialog() {
@@ -251,13 +247,13 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
             return;
         }
 
-        layoutLost.setVisibility(View.VISIBLE);
         Fragment frag = new LevelLostFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.level_lost, frag);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(null);
         ft.commit();
+        layoutLost.setVisibility(View.VISIBLE);
     }
 
     protected void runSkier() {
