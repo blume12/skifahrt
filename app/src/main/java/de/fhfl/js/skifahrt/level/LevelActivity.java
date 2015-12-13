@@ -45,7 +45,7 @@ abstract public class LevelActivity extends AppCompatActivity {
     private RelativeLayout relativeLayout;
     private boolean firstCall = true;
     private int levelStep = 1;
-    protected int life = 1;
+    protected int life = MAX_LIFE;
     private boolean lost = false;
     private boolean win = false;
     private ScheduledFuture scheduleFuture;
@@ -67,12 +67,13 @@ abstract public class LevelActivity extends AppCompatActivity {
             // levelStep setzen: default = 1
             levelStep = getIntent().getIntExtra("levelStep", 1);
             // Lebenspunkte setzen: default = 1
-            life = getIntent().getIntExtra("life", 1);
+            life = getIntent().getIntExtra("life", MAX_LIFE);
         }
 
         // Lädt die Texte für die Übersichtlichkeit
         loadLevelStepText();
         loadLevelText();
+        loadLifePointText();
 
         // lädt alle Variablen für die benötigten Views
         layoutWin = (LinearLayout) findViewById(R.id.layoutFragmentWin);
@@ -94,6 +95,15 @@ abstract public class LevelActivity extends AppCompatActivity {
         TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
         levelStepOutput.setText(getString(R.string.level_step, levelStep, MAX_STEP));
     }
+
+    /**
+     * Lädt den Text in das Layout für den momentanen Lebenspunkte
+     */
+    private void loadLifePointText() {
+        TextView livePointOutput = (TextView) findViewById(R.id.lifePoint);
+        livePointOutput.setText(getString(R.string.life_point, life));
+    }
+
 
     /**
      * Lädt den Text in das Layout für das momentane Level
@@ -204,7 +214,7 @@ abstract public class LevelActivity extends AppCompatActivity {
      */
     public void reloadLevel(View view) {
         // verlorenes Leben hochzählen.
-        life++;
+        life--;
 
         // Geliche Activity nochmal starten mit einem Leben weniger
         Intent intent = new Intent(this, this.getClass());
@@ -336,9 +346,8 @@ abstract public class LevelActivity extends AppCompatActivity {
         Log.d(TAG, "openLostDialog");
         // Zuerst alle Events stoppen.
         stopEvent();
-        if (life >= MAX_LIFE) {
-            // maximale lebensanzahl erreicht. Zurück zur MainActivity
-            life = 1;
+        if (life <= 1) {
+            // Es gibt keine Leben mehr: Zurück zur MainActivity
             openMainActivity();
             return;
         }
