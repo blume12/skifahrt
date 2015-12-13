@@ -3,11 +3,12 @@ package de.fhfl.js.skifahrt.movingObject;
 import android.util.Log;
 
 /**
+ * Stellt die gemeinsamen Methoden für das Bewegen eines Objekts bereit.
+ *
  * Created by Jasmin on 06.12.2015.
  */
 abstract public class MovingObject {
     private static final String TAG = "MovingObject";
-
 
     protected float positionX;
     protected float positionY;

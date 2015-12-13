@@ -20,6 +20,4 @@ public class LevelFourActivity extends LevelActivity {
     protected void stopEvent() {
         super.stopEvent();
     }
-
-
 }

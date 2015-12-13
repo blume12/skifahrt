@@ -56,14 +56,12 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
             speechRecognizer.destroy();
             Log.i(TAG, "destroy");
         }
-
     }
 
     @Override
     public void onBeginningOfSpeech() {
         Log.i(TAG, "onBeginningOfSpeech");
         isSpeechRecognizerAlive = true;
-
     }
 
     @Override
@@ -74,7 +72,6 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
     @Override
     public void onEndOfSpeech() {
         Log.i(TAG, "onEndOfSpeech");
-
         speechRecognizer.startListening(recognizerIntent);
     }
 
@@ -110,10 +107,10 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
 
         if (firstCase.equalsIgnoreCase("hoch") || firstCase.equalsIgnoreCase("koch") || firstCase.equalsIgnoreCase("^")) {
             Log.i(TAG, "hooch");
-            skier.setMoveY(-10);
+            skier.setMoveY(-0.2F);
         } else if (firstCase.equalsIgnoreCase("runter") || firstCase.equalsIgnoreCase("unter") || firstCase.equalsIgnoreCase("fronter")) {
             Log.i(TAG, "ruunter");
-            skier.setMoveY(10);
+            skier.setMoveY(0.2F);
         } else if (firstCase.equalsIgnoreCase("rechts") || firstCase.equalsIgnoreCase("recht")) {
             Log.i(TAG, "rechts");
             skier.setMoveY(0);

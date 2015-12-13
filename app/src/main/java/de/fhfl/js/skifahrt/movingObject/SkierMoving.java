@@ -1,9 +1,10 @@
 package de.fhfl.js.skifahrt.movingObject;
 
-import android.hardware.SensorEvent;
-import android.view.Display;
+import android.util.Log;
 
 /**
+ * Bewegt den Skifahrer an die nächste Position.
+ *
  * Created by Jasmin on 06.12.2015.
  */
 public class SkierMoving extends MovingObject {
@@ -34,7 +35,7 @@ public class SkierMoving extends MovingObject {
 
     public float getX() {
         if (moveX > 0) {
-            return moveX + skierPositionX;
+            return moveX + skierPositionX + speed;
         }
         return skierPositionX + speed;
     }
@@ -51,7 +52,7 @@ public class SkierMoving extends MovingObject {
     }
 
     public void addToSpeed(int levelStep) {
-        speed = speed + levelStep;
+        speed = speed + (levelStep *0.1F);
     }
 
     public void setMoveX(float moveX) {

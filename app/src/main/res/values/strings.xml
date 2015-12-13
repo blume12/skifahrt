@@ -5,6 +5,11 @@
     <string name="level_name_three">Level 3</string>
     <string name="level_name_four">Level 4</string>
 
+    <string name="level_name_one_long">Level 1: Bewegung durch Kippen</string>
+    <string name="level_name_two_long">Level 2: Bewegung durch Sprachsteuerung (hoch, runter, rechts)</string>
+    <string name="level_name_three_long">Level 3: Bewegung durch Wischen</string>
+    <string name="level_name_four_long">Level 4: 2-Spieler-Modus via Bluetooth</string>
+
     <string name="level_lost_headline">Level verloren!</string>
     <string name="level_lost_refresh">Erneut versuchen</string>
     <string name="level_win_headline">Level gewonnen!</string>

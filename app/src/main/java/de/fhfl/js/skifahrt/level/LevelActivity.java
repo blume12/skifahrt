@@ -31,6 +31,8 @@ import de.fhfl.js.skifahrt.movingObject.SkierMoving;
 abstract public class LevelActivity extends AppCompatActivity {
 
     private static final String TAG = "LevelActivity";
+    private static final int MAX_STEP = 5;
+    private static final int MAX_LIFE = 3;
 
     private LinearLayout layoutWin;
     private LinearLayout layoutLost;
@@ -43,16 +45,11 @@ abstract public class LevelActivity extends AppCompatActivity {
     private boolean firstCall = true;
 
     private int levelStep = 1;
-    private static final int maxSteps = 10;
-
-    private int life = 1;
-    private static final int maxLife = 3;
-
+    protected int life = 1;
     boolean lost = false;
     boolean win = false;
 
-    ScheduledExecutorService scheduleTaskExecutor;
-    ScheduledFuture scheduleFuture;
+    private ScheduledFuture scheduleFuture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +61,9 @@ abstract public class LevelActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             life = getIntent().getIntExtra("life", 1);
         }
-        TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
-        levelStepOutput.setText(levelStep + "/" + maxSteps);
+
+        setLevelStepText();
+        setLevelText();
 
         layoutWin = (LinearLayout) findViewById(R.id.layoutFragmentWin);
         layoutLost = (LinearLayout) findViewById(R.id.layoutFragmentLost);
@@ -74,10 +72,35 @@ abstract public class LevelActivity extends AppCompatActivity {
         rabbit = (ImageView) findViewById(R.id.imageView3);
         goal = (ImageView) findViewById(R.id.goal);
         relativeLayout = (RelativeLayout) findViewById(R.id.levelScreen);
+
         rabbitView = new Rabbit();
         skier = new SkierMoving();
     }
 
+    private void setLevelStepText() {
+        TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
+        levelStepOutput.setText(levelStep + "/" + MAX_STEP);
+    }
+
+    private void setLevelText() {
+        TextView levelText = (TextView) findViewById(R.id.levelText);
+        String text = "";
+        switch (this.getClass().getSimpleName()) {
+            case "LevelOneActivity":
+                text = getString(R.string.level_name_one_long);
+                break;
+            case "LevelTwoActivity":
+                text = getString(R.string.level_name_two_long);
+                break;
+            case "LevelThreeActivity":
+                text = getString(R.string.level_name_three_long);
+                break;
+            case "LevelFourActivity":
+                text = getString(R.string.level_name_four_long);
+                break;
+        }
+        levelText.setText(text);
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -94,7 +117,7 @@ abstract public class LevelActivity extends AppCompatActivity {
             rabbit.setY(rabbitView.getPositionY());
             firstCall = false;
 
-            scheduleTaskExecutor = Executors.newScheduledThreadPool(5);
+            ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(5);
 
             // This schedule a runnable task every 2 minutes
             scheduleFuture  = scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
@@ -161,7 +184,7 @@ abstract public class LevelActivity extends AppCompatActivity {
         levelStep++;
         Class nextClassLevel = this.getClass();
         Log.d(TAG, "" + this.getClass().getSimpleName());
-        if (levelStep > maxSteps) {
+        if (levelStep > MAX_STEP) {
             switch (this.getClass().getSimpleName()) {
                 case "LevelOneActivity":
                     nextClassLevel = LevelTwoActivity.class;
@@ -239,7 +262,7 @@ abstract public class LevelActivity extends AppCompatActivity {
     private void openLostDialog() {
         Log.d(TAG, "openLostDialog");
         stopEvent();
-        if (life >= maxLife) {
+        if (life >= MAX_LIFE) {
             // maximale lebensanzahl erreicht. Zurück zur MainActivity
             life = 1;
             Intent intent = new Intent(this, MainActivity.class);

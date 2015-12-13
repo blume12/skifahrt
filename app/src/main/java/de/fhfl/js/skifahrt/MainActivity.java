@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG, "openLevelTwo");
         Intent intent = new Intent(this, LevelTwoActivity.class);
         this.startActivity(intent);
-
     }
 
     /**

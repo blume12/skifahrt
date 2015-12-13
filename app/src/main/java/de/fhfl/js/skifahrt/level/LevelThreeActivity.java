@@ -50,9 +50,9 @@ public class LevelThreeActivity extends LevelActivity {
                 skier.setMoveY(0);
             }
             if ((e1.getY() - e2.getY()) > sensitvity) {
-                skier.setMoveY(-10);
+                skier.setMoveY(-0.2F);
             } else if ((e2.getY() - e1.getY()) > sensitvity) {
-                skier.setMoveY(10);
+                skier.setMoveY(0.2F);
             }
 
             return super.onFling(e1, e2, velocityX, velocityY);
