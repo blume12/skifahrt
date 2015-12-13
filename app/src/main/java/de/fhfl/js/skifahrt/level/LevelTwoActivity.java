@@ -18,10 +18,14 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
 
     private static final String TAG = "LevelTwoActivity";
 
-    private boolean isSpeechRecognizerAlive = false;
     private SpeechRecognizer speechRecognizer = null;
     private Intent recognizerIntent;
 
+    /**
+     * Erstellt bei ersten Aufrufen der Activity die Sprachsteuerung.
+     *
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +39,18 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
         speechRecognizer.startListening(recognizerIntent);
     }
 
+    /**
+     * Stoppt alle offenen Events.
+     */
     @Override
     protected void stopEvent() {
         super.stopEvent();
         speechRecognizer.stopListening();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
+    /**
+     * Beim Pausieren der Activity wird die Sprachsteuerung zerstört.
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -58,7 +63,6 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
     @Override
     public void onBeginningOfSpeech() {
         Log.i(TAG, "onBeginningOfSpeech");
-        isSpeechRecognizerAlive = true;
     }
 
     @Override
@@ -66,15 +70,22 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
         Log.i(TAG, "onBufferReceived");
     }
 
+    /**
+     * Beim Ende des Sprechens wird sofort nochmal die Sprachsteuerung gestartet.
+     */
     @Override
     public void onEndOfSpeech() {
         Log.i(TAG, "onEndOfSpeech");
         speechRecognizer.startListening(recognizerIntent);
     }
 
+    /**
+     * Gibt den ErrorCode aus.
+     * @param errorCode int
+     */
     @Override
     public void onError(int errorCode) {
-
+        Log.e(TAG, "onError: " + errorCode);
     }
 
     @Override
@@ -93,6 +104,12 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
         Log.i(TAG, "onReadyForSpeech");
     }
 
+    /**
+     * Überprüft die Ergebenisse der Spracheingabe, ob ein richtiges Wort gesagt wurde und
+     * setzt dann die Werte für die Bewegung des Skifahrers.
+     *
+     * @param results
+     */
     @Override
     public void onResults(Bundle results) {
         Log.i(TAG, "onResults");
@@ -112,15 +129,10 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
             }
         }
         speechRecognizer.startListening(recognizerIntent);
-
     }
 
     @Override
     public void onRmsChanged(float rmsdB) {
-        Log.d(TAG, "" + isSpeechRecognizerAlive);
-        if (!isSpeechRecognizerAlive) {
-            speechRecognizer.startListening(recognizerIntent);
-        }
+        Log.i(TAG, "onRmsChanged");
     }
-
 }

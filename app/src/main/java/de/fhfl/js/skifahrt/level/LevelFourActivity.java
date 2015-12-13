@@ -15,6 +15,12 @@ import java.util.Set;
 public class LevelFourActivity extends LevelActivity {
     private final static int REQUEST_ENABLE_BT = 1;
 
+    /**
+     * Erstellt bei Starten der Activity das Bluetooth Modul. Zunächst wird überprüft, ob Bluetooth
+     * vorhanden ist und wird gegebenenfalls angeschaltet.
+     *
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,5 @@ public class LevelFourActivity extends LevelActivity {
                 }
             }
         }
-
     }
 }

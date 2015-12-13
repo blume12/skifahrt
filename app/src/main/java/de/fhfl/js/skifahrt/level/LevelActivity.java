@@ -92,7 +92,7 @@ abstract public class LevelActivity extends AppCompatActivity {
      */
     private void loadLevelStepText() {
         TextView levelStepOutput = (TextView) findViewById(R.id.levelStep);
-        levelStepOutput.setText(levelStep + "/" + MAX_STEP);
+        levelStepOutput.setText(getString(R.string.level_step, levelStep, MAX_STEP));
     }
 
     /**
@@ -380,7 +380,7 @@ abstract public class LevelActivity extends AppCompatActivity {
                 //}
             }
         } catch (Exception e) {
-            System.out.print("Error: "+e);
+            System.out.print("Error: " + e);
         }
     }
 

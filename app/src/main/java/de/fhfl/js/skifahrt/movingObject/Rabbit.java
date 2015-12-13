@@ -6,11 +6,17 @@ import android.widget.ImageView;
 import java.util.Random;
 
 /**
+ * Stellt die spezifischen Methoden für den Hasen bereit.
+ * <p/>
  * Created by Jasmin on 17.11.2015.
  */
 public class Rabbit extends MovingObject {
     private static final String TAG = "Rabbit";
 
+    /**
+     * Lädt die Position, an der der Hase gezeigt werden soll. Dieser wird zufällig in der hinteren
+     * Hälfte des Bildschirm positioniert.
+     */
     public void loadPosition() {
         Random rand = new Random();
         float max = maxWidth - 500;
