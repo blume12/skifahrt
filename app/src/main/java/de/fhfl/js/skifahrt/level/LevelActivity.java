@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -111,8 +110,6 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
                     });
                 }
             }, 0, 2, TimeUnit.MILLISECONDS);
-
-
         }
     }
 
@@ -126,6 +123,27 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         super.onBackPressed();
     }
 
+    /**
+     * Wird aufgerufen, wenn die App zerstört wird aber noch nicht vollständig beendet wird
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Alle offenen Events müssen hier gestoppt werden
+        stopEvent();
+        finish();
+    }
+
+    /**
+     * Wird aufgerufen, wenn die App beendet wird.
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Alle offenen Events müssen hier gestoppt werden
+        stopEvent();
+        finish();
+    }
 
     public void reloadLevel(View view) {
         life++;
