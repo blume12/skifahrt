@@ -122,6 +122,5 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
         Log.v(TAG, "onPause");
         super.onPause();
         sensorManager.unregisterListener(this);
-        super.onStop();
     }
 }

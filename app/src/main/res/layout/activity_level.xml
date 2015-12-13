@@ -48,7 +48,7 @@
         android:src="@drawable/skier" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/rabbit"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentEnd="true"

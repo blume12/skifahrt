@@ -1,12 +1,10 @@
 package de.fhfl.js.skifahrt.level;
 
-
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import de.fhfl.js.skifahrt.R;
 
 /**
+ * Stellt die Funktionen für die Bluetooth-Übertragung bereit.
+ * <p/>
  * Created by Jasmin on 17.11.2015.
  */
 public class LevelFourActivity extends LevelActivity {

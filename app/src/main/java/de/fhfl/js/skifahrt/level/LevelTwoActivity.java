@@ -6,24 +6,21 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
+ * Stellt die Funktionen für die Sprachsteuerung bereit.
+ * <p/>
  * Created by Admin on 24.11.2015.
  */
-
-import de.fhfl.js.skifahrt.R;
-
 public class LevelTwoActivity extends LevelActivity implements RecognitionListener {
+
+    private static final String TAG = "LevelTwoActivity";
 
     private boolean isSpeechRecognizerAlive = false;
     private SpeechRecognizer speechRecognizer = null;
     private Intent recognizerIntent;
-    private static final String TAG = "LevelTwoActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +63,7 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
 
     @Override
     public void onBufferReceived(byte[] buffer) {
-        Log.i(TAG, "onBufferReceived: " + buffer);
+        Log.i(TAG, "onBufferReceived");
     }
 
     @Override
@@ -88,9 +85,7 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
     @Override
     public void onPartialResults(Bundle arg0) {
         Log.i(TAG, "onPartialResults");
-
         speechRecognizer.startListening(recognizerIntent);
-
     }
 
     @Override
@@ -103,19 +98,21 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
         Log.i(TAG, "onResults");
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
-        String firstCase = matches.get(0).toString();
-
-        if (firstCase.equalsIgnoreCase("hoch") || firstCase.equalsIgnoreCase("koch") || firstCase.equalsIgnoreCase("^")) {
-            Log.i(TAG, "hooch");
-            skier.setMoveY(-0.2F);
-        } else if (firstCase.equalsIgnoreCase("runter") || firstCase.equalsIgnoreCase("unter") || firstCase.equalsIgnoreCase("fronter")) {
-            Log.i(TAG, "ruunter");
-            skier.setMoveY(0.2F);
-        } else if (firstCase.equalsIgnoreCase("rechts") || firstCase.equalsIgnoreCase("recht")) {
-            Log.i(TAG, "rechts");
-            skier.setMoveY(0);
+        String firstCase = matches.get(0);
+        if(firstCase != null) {
+            if (firstCase.equalsIgnoreCase("hoch") || firstCase.equalsIgnoreCase("koch") || firstCase.equalsIgnoreCase("^")) {
+                Log.i(TAG, "hooch");
+                skier.setMoveY(-0.2F);
+            } else if (firstCase.equalsIgnoreCase("runter") || firstCase.equalsIgnoreCase("unter") || firstCase.equalsIgnoreCase("fronter")) {
+                Log.i(TAG, "ruunter");
+                skier.setMoveY(0.2F);
+            } else if (firstCase.equalsIgnoreCase("rechts") || firstCase.equalsIgnoreCase("recht")) {
+                Log.i(TAG, "rechts");
+                skier.setMoveY(0);
+            }
         }
         speechRecognizer.startListening(recognizerIntent);
+
     }
 
     @Override
