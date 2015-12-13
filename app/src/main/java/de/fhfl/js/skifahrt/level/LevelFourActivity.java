@@ -14,12 +14,11 @@ public class LevelFourActivity extends LevelActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
     }
 
     @Override
     protected void stopEvent() {
-
+        super.stopEvent();
     }
 
 

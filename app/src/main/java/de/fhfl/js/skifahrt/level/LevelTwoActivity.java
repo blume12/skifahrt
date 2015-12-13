@@ -40,6 +40,7 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
 
     @Override
     protected void stopEvent() {
+        super.stopEvent();
         speechRecognizer.stopListening();
     }
 
@@ -126,7 +127,6 @@ public class LevelTwoActivity extends LevelActivity implements RecognitionListen
         if (!isSpeechRecognizerAlive) {
             speechRecognizer.startListening(recognizerIntent);
         }
-        runSkier();
     }
 
 }

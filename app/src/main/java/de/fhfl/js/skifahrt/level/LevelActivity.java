@@ -7,11 +7,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import de.fhfl.js.skifahrt.MainActivity;
 import de.fhfl.js.skifahrt.R;
@@ -40,6 +46,12 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
 
     private int life = 1;
     private static final int maxLife = 3;
+
+    boolean lost = false;
+    boolean win = false;
+
+    ScheduledExecutorService scheduleTaskExecutor;
+    ScheduledFuture scheduleFuture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +92,27 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
             rabbit.setX(rabbitView.getPositionX());
             rabbit.setY(rabbitView.getPositionY());
             firstCall = false;
+
+            scheduleTaskExecutor = Executors.newScheduledThreadPool(5);
+
+            // This schedule a runnable task every 2 minutes
+            scheduleFuture  = scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+                public void run() {
+                    runSkier();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(lost) {
+                                openLostDialog();
+                            } else if(win) {
+                                openWinDialog();
+                            }
+                        }
+                    });
+                }
+            }, 0, 2, TimeUnit.MILLISECONDS);
+
+
         }
     }
 
@@ -138,7 +171,7 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
 
     }
 
-    protected boolean isViewOverlapping(View skier, View goal) {
+    private boolean isViewOverlapping(View skier, View goal) {
         int[] firstPosition = new int[2];
         int[] secondPosition = new int[2];
 
@@ -176,8 +209,8 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         return goal;
     }
 
-    protected void openWinDialog() {
-        layoutWin.setVisibility(View.VISIBLE);
+    private void openWinDialog() {
+        stopEvent();
 
         Fragment frag = new LevelWinFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -185,9 +218,13 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(null);
         ft.commit();
+        layoutWin.setVisibility(View.VISIBLE);
+        layoutWin.bringToFront();
     }
 
-    protected void openLostDialog() {
+    private void openLostDialog() {
+        Log.d(TAG, "openLostDialog");
+        stopEvent();
         if (life >= maxLife) {
             // maximale lebensanzahl erreicht. Zurück zur MainActivity
             life = 1;
@@ -206,43 +243,38 @@ abstract public class LevelActivity extends AppCompatActivity implements LevelWi
     }
 
     protected void runSkier() {
-        runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              try {
-                                  //Log.d(TAG, "Run");
-                                  //Log.d(TAG, "moveX: " + (skifahrer.getX() + moveX));
+        try {
+            Log.d(TAG, "Run");
+            //Log.d(TAG, "moveX: " + (skifahrer.getX() + moveX));
 
 
-                                  if (isViewOverlapping(getSkierImageView(), getGoalImageView())) {
-                                      Log.d(TAG, "Ziel erreicht");
-                                      openWinDialog();
-                                      stopEvent();
-                                  } else if (isViewOverlapping(getSkierImageView(), getRabbitImageView())) {
-                                      Log.i(TAG, "Level verloren");
-                                      openLostDialog();
-                                      stopEvent();
-                                  } else {
-                                      skier.setSkierPositionX(getSkierImageView().getX());
-                                      skier.setSkierPositionY(getSkierImageView().getY());
+            if (isViewOverlapping(getSkierImageView(), getGoalImageView())) {
+                Log.d(TAG, "Ziel erreicht");
+                //openWinDialog();
+                win = true;
+            } else if (isViewOverlapping(getSkierImageView(), getRabbitImageView())) {
+                Log.i(TAG, "Level verloren");
+                //openLostDialog();
+                lost = true;
+            } else {
+                skier.setSkierPositionX(getSkierImageView().getX());
+                skier.setSkierPositionY(getSkierImageView().getY());
                                      /* if (skier.isYOutOfWindow()) {
                                           stopEvent();
                                           openLostDialog();
                                       } else {*/
-                                          getSkierImageView().setX(skier.getX());
-                                          getSkierImageView().setY(skier.getY());
-                                      //}
-                                  }
-                              } catch (Exception e) {
-                                  System.out.print(e);
-                              }
-                          }
-                      }
-
-        );
+                getSkierImageView().setX(skier.getX());
+                getSkierImageView().setY(skier.getY());
+                //}
+            }
+        } catch (Exception e) {
+            System.out.print(e);
+        }
     }
 
-    abstract protected void stopEvent();
+    protected void stopEvent() {
+        scheduleFuture.cancel(true);
+    };
 
 
 }

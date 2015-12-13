@@ -6,11 +6,11 @@ import android.view.Display;
 /**
  * Created by Jasmin on 06.12.2015.
  */
- public class SkierMoving extends MovingObject {
+public class SkierMoving extends MovingObject {
 
     private String TAG = "SkierMoving";
 
-    protected float moveX;
+    protected float moveX = 0.05F;
     protected float moveY;
 
     private float speed = 0.0F;

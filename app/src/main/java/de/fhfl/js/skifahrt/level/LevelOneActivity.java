@@ -41,6 +41,7 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
 
     @Override
     protected void stopEvent() {
+        super.stopEvent();
         sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(SensorManager.SENSOR_DELAY_GAME));
     }
 
@@ -61,7 +62,6 @@ public class LevelOneActivity extends LevelActivity implements SensorEventListen
                 skier.setMoveX(event.values[1]);
                 break;
         }
-        runSkier();
     }
 
     @Override
