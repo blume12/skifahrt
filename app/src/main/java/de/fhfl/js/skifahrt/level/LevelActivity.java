@@ -370,14 +370,12 @@ abstract public class LevelActivity extends AppCompatActivity {
             } else {
                 skier.setSkierPositionX(getSkierImageView().getX());
                 skier.setSkierPositionY(getSkierImageView().getY());
-                // TODO: Bande führt auch zum fehler
-                                     /* if (skier.isYOutOfWindow()) {
-                                          stopEvent();
-                                          openLostDialog();
-                                      } else {*/
-                getSkierImageView().setX(skier.getX());
-                getSkierImageView().setY(skier.getY());
-                //}
+                if (skier.isOutOfScreen()) {
+                    lost = true;
+                } else {
+                    getSkierImageView().setX(skier.getX());
+                    getSkierImageView().setY(skier.getY());
+                }
             }
         } catch (Exception e) {
             System.out.print("Error: " + e);

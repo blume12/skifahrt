@@ -75,6 +75,20 @@ public class SkierMoving extends MovingObject {
     }
 
     /**
+     * Gibt zurück, ob der Skifahrer die Bande berührt.
+     *
+     * @return boolean
+     */
+    public boolean isOutOfScreen() {
+        if (skierPositionY <= 0.0) {
+            return true;
+        } else if (skierPositionY > maxHeight - skierHeight) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Berechnet die neue Geschwindigkeit abghängig von der Geschwindigkeit.
      *
      * @param levelStep int
