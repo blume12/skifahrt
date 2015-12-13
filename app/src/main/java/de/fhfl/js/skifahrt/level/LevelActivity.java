@@ -339,8 +339,7 @@ abstract public class LevelActivity extends AppCompatActivity {
         if (life >= MAX_LIFE) {
             // maximale lebensanzahl erreicht. Zurück zur MainActivity
             life = 1;
-            Intent intent = new Intent(this, MainActivity.class);
-            this.startActivity(intent);
+            openMainActivity();
             return;
         }
         // jetzt das Fragment starten.
@@ -391,5 +390,13 @@ abstract public class LevelActivity extends AppCompatActivity {
     protected void stopEvent() {
         // Stoppt den Thread für das Bewegen des Skifahrers.
         scheduleFuture.cancel(true);
+    }
+
+    /**
+     * Öffnet die MainActivity.
+     */
+    protected void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 }
